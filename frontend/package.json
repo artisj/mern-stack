@@ -26,6 +26,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"bootstrap-icons": "^1.8.3",
+		"nodemon": "^2.0.19",
 		"svelte-kit": "^1.0.0"
 	}
 }
