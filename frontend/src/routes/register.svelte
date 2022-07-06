@@ -1,4 +1,5 @@
 <script>
+	import authService from '$lib/features/authService'
 	// your script goes here
 	let formData = {
 		name: '',
@@ -11,7 +12,7 @@
 
 	const onSubmit = () => {
 		console.log('submit event fired');
-
+		authService.register(formData)
 		console.log(formData);
 	};
 </script>
