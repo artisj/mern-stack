@@ -1,13 +1,36 @@
 <script>
 	// your script goes here
+	import { initialState } from '$lib/features/authStore';
+	import authService from '$lib/features/authService';
+	import { goto } from '$app/navigation';
+
+	const onLogout = () => {
+		authService.logout();
+
+		//reset state
+		$initialState.user = '';
+
+		//navigate to home
+		goto('/');
+	};
 </script>
 
 <!-- markup (zero or more items) goes here -->
 
 <header class="header">
 	<div class="logo"><a href="/">GoalSetter</a></div>
+
 	<ul>
-		<li><a href="/login"><i class="bi bi-box-arrow-in-right" />Login</a></li>
+		{#if $initialState.user !== ''}
+			<!-- content here -->
+			<li>
+				<button class="btn" on:click={onLogout}><i class="bi bi-box-arrow-in-left" />Logout</button>
+			</li>
+		{:else}
+			<!-- else content here -->
+			<li><a href="/login"><i class="bi bi-box-arrow-in-right" />Login</a></li>
+		{/if}
+
 		<li><a href="/register"><i class="bi bi-person-fill" />Register</a></li>
 	</ul>
 </header>
@@ -69,5 +92,9 @@
 
 	.i {
 		margin-left: 10px;
+	}
+
+	.btn {
+		border: none;
 	}
 </style>

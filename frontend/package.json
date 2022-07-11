@@ -1,7 +1,6 @@
 {
 	"name": "frontend",
 	"version": "0.0.1",
-	
 	"scripts": {
 		"dev": "svelte-kit dev --port 3020",
 		"build": "svelte-kit build",
@@ -30,6 +29,8 @@
 		"axios": "^0.27.2",
 		"bootstrap-icons": "^1.8.3",
 		"nodemon": "^2.0.19",
-		"svelte-kit": "^1.0.0"
+		"svelte-kit": "^1.0.0",
+		"svelte-navigator": "^3.1.6",
+		"svelte-toasts": "^1.1.2"
 	}
 }

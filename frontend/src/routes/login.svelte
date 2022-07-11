@@ -1,16 +1,50 @@
 <script>
+	import { toasts } from 'svelte-toasts';
+	import authService from '$lib/features/authService';
+	import { initialState } from '$lib/features/authStore';
+	import { goto } from '$app/navigation';
+
+	toasts.setDefaults({
+		theme: 'dark',
+		placement: 'top-center',
+		duration: 5000
+	});
+
 	// your script goes here
 	let formData = {
 		email: '',
 		password: ''
 	};
 
-	//const { name, email, password, password2 } = formData;
+	let { email, password } = formData;
 
 	const onSubmit = () => {
-		console.log('submit event fired');
+		console.log(`User state  ${$initialState.user}`);
 
-		console.log(formData);
+		//$initialState.user = '';
+
+		if (!email || !password) {
+			toasts.error('Please enter email and password');
+		} else {
+			try {
+				formData = { email, password };
+				authService.login(formData).then((a) => {
+					console.log(a);
+					if (a !== 'error') {
+						$initialState.user = JSON.parse(localStorage.getItem('user'));
+					}
+				});
+				//console.log(response);
+
+				//console.log($initialState.user);
+				//goto('/');
+			} catch (err) {
+				$initialState.isLoading = false;
+			}
+		}
+
+		//console.log($initialState);
+		//console.log(formData);
 	};
 </script>
 
@@ -19,6 +53,7 @@
 	<h1>Login</h1>
 	<p>Login and enter your goals</p>
 </section>
+
 <section class="form">
 	<form on:submit|preventDefault={onSubmit}>
 		<div class="form-group">
@@ -27,7 +62,7 @@
 				class="form-control"
 				id="email"
 				name="email"
-				bind:value={formData.email}
+				bind:value={email}
 				placeholder="Enter your email"
 			/>
 		</div>
@@ -37,7 +72,7 @@
 				class="form-control"
 				id="password"
 				name="password"
-				bind:value={formData.password}
+				bind:value={password}
 				placeholder="Enter your password"
 			/>
 		</div>

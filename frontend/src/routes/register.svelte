@@ -1,19 +1,54 @@
 <script>
-	import authService from '$lib/features/authService'
+	import authService from '$lib/features/authService';
+	import { initialState } from '$lib/features/authStore';
+	import { toasts } from 'svelte-toasts';
+	import { current_component } from 'svelte/internal';
+
+	toasts.setDefaults({
+		theme: 'dark',
+		placement: 'top-center',
+		duration: 5000
+	});
+
 	// your script goes here
-	let formData = {
+	let Regform = {
 		name: '',
 		email: '',
 		password: '',
 		password2: ''
 	};
 
-	//const { name, email, password, password2 } = formData;
+	let error = '';
+	let { name, email, password, password2 } = Regform;
 
 	const onSubmit = () => {
+		$initialState.isLoading = true;
+
+		console.log($initialState);
 		console.log('submit event fired');
-		authService.register(formData)
-		console.log(formData);
+		Regform = { name, email, password, password2 };
+		//console.log(Regform);
+
+		if (password !== password2) {
+			toasts.error('Passwords do not match');
+		} else {
+			try {
+				authService.register(Regform);
+			} catch (err) {
+				console.log(err);
+				$initialState.isLoading = false;
+			}
+		}
+
+		$initialState.isLoading = false;
+		console.log($initialState);
+		//toasts.success('You have successfully registered');
+		// clear form
+		name = '';
+		email = '';
+		password = '';
+		password2 = '';
+		//console.log(formData);
 	};
 </script>
 
@@ -22,6 +57,11 @@
 	<h1>Register</h1>
 	<p>Please create an account</p>
 </section>
+{#if $initialState.isLoading === true}
+	<!-- content here -->
+	<h1>loading</h1>
+{/if}
+
 <section class="form">
 	<form on:submit|preventDefault={onSubmit}>
 		<div class="form-group">
@@ -30,7 +70,7 @@
 				class="form-control"
 				id="name"
 				name="name"
-				bind:value={formData.name}
+				bind:value={name}
 				placeholder="Enter your name"
 			/>
 		</div>
@@ -40,7 +80,7 @@
 				class="form-control"
 				id="email"
 				name="email"
-				bind:value={formData.email}
+				bind:value={email}
 				placeholder="Enter your email"
 			/>
 		</div>
@@ -50,7 +90,7 @@
 				class="form-control"
 				id="password"
 				name="password"
-				bind:value={formData.password}
+				bind:value={password}
 				placeholder="Enter your password"
 			/>
 		</div>
@@ -60,7 +100,7 @@
 				class="form-control"
 				id="password2"
 				name="password2"
-				bind:value={formData.password2}
+				bind:value={password2}
 				placeholder="Confirm your password"
 			/>
 		</div>
@@ -69,6 +109,14 @@
 		</div>
 	</form>
 </section>
+<div class="row">
+	<div class="col">
+		<p>
+			Already registered?
+			<a href="/login">Login</a>
+		</p>
+	</div>
+</div>
 
 <style>
 	/* your styles go here */

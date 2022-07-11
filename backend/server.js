@@ -19,7 +19,7 @@ const app = express();
 app.use(morgan('dev'))
 
 app.use(cors({
-    origin: "*",
+    origin: "http://localhost:3020",
     methods: ['GET','POST','DELETE','PUT']
 }))
 
