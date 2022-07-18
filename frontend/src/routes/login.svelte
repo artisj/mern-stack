@@ -3,6 +3,7 @@
 	import authService from '$lib/features/authService';
 	import { initialState } from '$lib/features/authStore';
 	import { goto } from '$app/navigation';
+	import {browser} from '$app/env'
 
 	toasts.setDefaults({
 		theme: 'dark',
@@ -32,6 +33,10 @@
 					console.log(a);
 					if (a !== 'error') {
 						$initialState.user = JSON.parse(localStorage.getItem('user'));
+
+						if(browser){
+							goto('/')
+						}
 					}
 				});
 				//console.log(response);

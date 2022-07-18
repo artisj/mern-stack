@@ -3,6 +3,20 @@
 	import { initialState } from '$lib/features/authStore';
 	import { toasts } from 'svelte-toasts';
 	import { current_component } from 'svelte/internal';
+	import { onMount } from 'svelte';
+	import {browser} from '$app/env';
+	import { goto } from '$app/navigation';
+
+	onMount(() => {
+		if($initialState.user){
+			if(browser){
+				goto('/')
+			}
+			
+		}
+
+		
+	});
 
 	toasts.setDefaults({
 		theme: 'dark',
@@ -49,6 +63,11 @@
 		password = '';
 		password2 = '';
 		//console.log(formData);
+
+		//navigate to dashboard
+		if(browser){
+				goto('/')
+			}
 	};
 </script>
 

@@ -3,7 +3,7 @@ import { toasts } from 'svelte-toasts'
 import { initialState } from '$lib/features/authStore';
 
 
-const API_URL = `http://localhost:5050/api/users/`
+const API_URL = `http://localhost:5000/api/users/`
 
 const register = async (userData) => {
     try {
@@ -45,6 +45,7 @@ const login = async (userData) => {
 
 const logout = async () => {
     localStorage.removeItem('user')
+    
 }
 
 const authService = {

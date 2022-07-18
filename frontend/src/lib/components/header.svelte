@@ -29,9 +29,10 @@
 		{:else}
 			<!-- else content here -->
 			<li><a href="/login"><i class="bi bi-box-arrow-in-right" />Login</a></li>
+			<li><a href="/register"><i class="bi bi-person-fill" />Register</a></li>
 		{/if}
 
-		<li><a href="/register"><i class="bi bi-person-fill" />Register</a></li>
+		
 	</ul>
 </header>
 

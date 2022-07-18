@@ -16,7 +16,7 @@ import { writable } from 'svelte/store';
 
 
  export const initialState = writable({
-    user: '',
+    user: {},
     isError: false,
     isSuccess: false,
     isLoading: false,
